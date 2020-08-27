@@ -36,8 +36,8 @@ limit:
 
 <!-- Your Code Goes Here -->
 
-query:
-projection:
+query:{$and:[{"ipo.valuation_amount": {$gt: 100000000}},{founded_year:{\$lt:2010}}]}
+projection:{name:1 ,ipo:1}
 sort:
 skip:
 limit:
@@ -56,7 +56,7 @@ limit:10
 
 <!-- Your Code Goes Here -->
 
-query:{partners:{\$exists:true}}
+query:{partners:{\$exists:false}}
 projection:
 sort:
 skip:
@@ -66,7 +66,7 @@ limit:
 
 <!-- Your Code Goes Here -->
 
-query:
+query:{category_code:{\$type:"null"}}
 projection:
 sort:
 skip:
@@ -76,8 +76,8 @@ limit:
 
 <!-- Your Code Goes Here -->
 
-query:
-projection:
+query:{$and:[{number_of_employees:{$gt:100}}, {number_of_employees:{\$lt:1000}}]}
+projection:{name:1, number_of_employees:1}
 sort:
 skip:
 limit:
@@ -88,7 +88,7 @@ limit:
 
 query:
 projection:
-sort:
+sort:{"ipo.valuation_amount":-1}
 skip:
 limit:
 
@@ -98,25 +98,25 @@ limit:
 
 query:
 projection:
-sort:
+sort:{number_of_employees:-1}
 skip:
-limit:
+limit:10
 
 ### 11. All the companies founded on the second semester of the year. Limit your search to 1000 companies.
 
 <!-- Your Code Goes Here -->
 
-query:
+query:{\$or:[{founded_month:1}, {founded_month:2},{founded_month:3}, {founded_month:4}, {founded_month:5}, {founded_month:6}]}
 projection:
 sort:
 skip:
-limit:
+limit:1000
 
 ### 12. All the companies founded before 2000 that have an acquisition amount of more than 10.000.000
 
 <!-- Your Code Goes Here -->
 
-query:
+query: {$and:[{founded_year: {$lt :2000}}, {"acquisition.price_amount": {\$gt: 10000000}}]}
 projection:
 sort:
 skip:
@@ -126,9 +126,9 @@ limit:
 
 <!-- Your Code Goes Here -->
 
-query:
-projection:
-sort:
+query:{"acquisition.acquired_year":{\$gt:2010}}
+projection:{name:1, acquisition:1}
+sort:{"acquisition.price_amount":1}
 skip:
 limit:
 
@@ -137,8 +137,8 @@ limit:
 <!-- Your Code Goes Here -->
 
 query:
-projection:
-sort:
+projection:{name:1, founded_year:1}
+sort:{founded_year:1}
 skip:
 limit:
 
@@ -146,19 +146,19 @@ limit:
 
 <!-- Your Code Goes Here -->
 
-query:
+query:{founded_day:{\$lte:7}}
 projection:
-sort:
+sort:{"acquisition.price_amount":-1}
 skip:
-limit:
+limit:10
 
 ### 16. All the companies on the 'web' `category` that have more than 4000 employees. Sort them by the amount of employees in ascending order.
 
 <!-- Your Code Goes Here -->
 
-query:
+query:{$and:[{category_code:"web"}, {number_of_employees:{$gt:4000}}]}
 projection:
-sort:
+sort:{number_of_employees:1}
 skip:
 limit:
 
@@ -166,7 +166,7 @@ limit:
 
 <!-- Your Code Goes Here -->
 
-query:
+query:{$and:[{"acquisition.price_amount":{$gt:10000000}}, {"acquisition.price_currency_code":"EUR"}]}
 projection:
 sort:
 skip:
@@ -176,17 +176,17 @@ limit:
 
 <!-- Your Code Goes Here -->
 
-query:
-projection:
+query:{\$or:[{"acquisition.acquired_month":1}, {"acquisition.acquired_month":2}, {"acquisition.acquired_month":3}]}
+projection:{name:1, acquisition:1}
 sort:
 skip:
-limit:
+limit:10
 
 ### 19. All the companies that have been founded between 2000 and 2010, but have not been acquired before 2011.
 
 <!-- Your Code Goes Here -->
 
-query:
+query:{$and:[{founded_year: {$gt:2000}}, {founded_year:{$lt:2010}}, {founded_year : { $ne : 2011} }]}
 projection:
 sort:
 skip:
